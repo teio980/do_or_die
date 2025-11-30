@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <title>Personality Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        // change Light / Dark Mode
+        function toggleTheme(){
+            const html = document.documentElement;
+            html.classList.toggle('dark');
+        }
+    </script>
+    <style>
+        .cover{
+            margin: 25px 80px;
+        }
+        /* ----- CONTENT ----- */
+        .container{
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 30px 40px;
+            background: #ffffff;
+            border-radius: 14px;
+            box-shadow: 0 3px 20px rgba(0,0,0,0.06);
+        }
+        h1{
+            font-size: 40px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            color: #4F46E5;
+            text-align: center;
+            text-shadow: 1px 2px 4px rgba(0,0,0,0.15);
+            letter-spacing: 5px;
+        }
+        .card-grid{
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+            gap: 50px;
+            margin-top: 25px;
+        }
+        /* ----- CARDS ----- */
+        .card{
+            background: #ffffff;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            cursor: pointer;
+            transition: 0.25s;
+        }
+        .card:hover{
+            transform: translateY(-4px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+        }
+        .card-banner{
+            height: 140px;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+        .c1{
+            background: linear-gradient(130deg, #b5c4d4, #d7dce0);
+        }
+        .c2{
+            background: linear-gradient(130deg, #3f3ec2, #8366e6);
+        }
+        .c3{
+            background: linear-gradient(130deg, #bfc2c7, #e0e0e0);
+        }
+        .card-content{
+            padding: 18px;
+            font-weight: 500;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body class="bg-[#F5F5F7] dark:bg-[#121212] text-grey-900 dark:text-gray-100">
+    <!--Navgation Bar-->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-[#1A1A1A] border-b border gray-200 dark:border-gray-700">
+        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+            <!--Logo with Gradient Hover-->
+            <div class="text-xl font-extrabold tracking-wide bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent transition duration-300 transform hover:scale-105 hover:from-pink-500 hover:to-yellow-500">Do or Cry</div>
+            <!--Navigation Links with Hover Gradient-->
+            <div class="flex items-center space-x-6">
+                <a href="home.html" 
+                    class="font-medium transition duration-300 
+                            bg-gradient-to-r from-gray-800 to-gray-800 bg-clip-text text-transparent 
+                            dark:from-grey-200 dark:to-grey-200 
+                            hover:from-indigo-500 hover:to-purple-500">
+                    Home
+                </a>
+                <a href="dashboard.html" 
+                    class="font-medium transition duration-300 
+                            bg-gradient-to-r from-gray-800 to-gray-800 bg-clip-text text-transparent 
+                            dark:from-grey-200 dark:to-grey-200 
+                            hover:from-indigo-500 hover:to-purple-500">
+                    Dashboard
+                </a>
+                <a href="tools.html" 
+                    class="font-medium transition duration-300 
+                        bg-gradient-to-r from-gray-800 to-gray-800 bg-clip-text text-transparent 
+                        dark:from-grey-200 dark:to-grey-200 
+                        hover:from-indigo-500 hover:to-purple-500">
+                    Tools
+                </a>
+
+                <!--Theme Button-->
+                <button onclick="toggleTheme()" class="p2 rounded-full bg-gradient-to-r from-purple-600 to-blue-500 text-white dark:text-black transition duration-500 transform hover:scale-125 hover:rotate-180 hover:shadow-[0_0_12px_rgba(139,92,246,0.6)]">
+                    <span class="dark:hidden">🌙</span>
+                    <span class="hidden dark:inline">☀️</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!--Prevent content hidden behind the navbar-->
+    <div class="h-16"></div>
+
+    <!-- Personality Page  Container -->
+    <!--Main Area-->
+    <div class="cover">
+        <div class="container">
+            <h1 style="font-size: 45px;">Personality Test</h1>
+        </div>
+    </div>
+</body>
+</html>
