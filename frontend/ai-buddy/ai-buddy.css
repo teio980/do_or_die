@@ -260,13 +260,13 @@ html.dark #userInput {
 }
 
 html.dark #sendBtn {
-  background: linear-gradient(135deg, #6a5acd, #7b68ee); /* 蓝紫渐变，更亮眼 */
+  background: linear-gradient(135deg, #6a5acd, #7b68ee);
   color: white;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
 html.dark #sendBtn:hover {
-  background: linear-gradient(135deg, #7b68ee, #6a5acd); /* hover 渐变反转 */
+  background: linear-gradient(135deg, #7b68ee, #6a5acd);
   transform: scale(1.08) translateY(-2px);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
 }
