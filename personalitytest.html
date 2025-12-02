@@ -121,5 +121,35 @@
     }
 </script>
 
+<script>
+function handleSubmit(event){
+event.preventDefault();
+const formData=new FormData(document.getElementById('quizForm'));
+let scores={
+avoider:0, perfectionist:0, dreamer:0, overwhelmed:0, crisis:0, distracted:0
+};
+const map={
+avoider:[0,6,12],
+perfectionist:[1,7,13],
+dreamer:[2,8],
+overwhelmed:[3,9,15],
+crisis:[4,10,16],
+distracted:[5,11,17,19]
+};
+for(const type in map){ map[type].forEach(i=>{scores[type]+=Number(formData.get('q'+i)||0)});}
+let resultType=Object.keys(scores).reduce((a,b)=>scores[a]>scores[b]?a:b);
+const descriptions={
+avoider:"You fear failure or judgment, causing avoidance.",
+perfectionist:"You want everything perfect before starting.",
+dreamer:"You enjoy ideas but struggle to finish.",
+overwhelmed:"Tasks feel too big or unclear.",
+crisis:"You work only under pressure.",
+distracted:"You struggle to stay focused due to interruptions."
+};
+alert("Your personality type: "+resultType.toUpperCase()+"\n"+descriptions[resultType]);
+return false;
+}
+function resetForm(){document.getElementById('quizForm').reset();}
+</script>
 </body>
 </html>
