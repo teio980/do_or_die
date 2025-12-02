@@ -1,6 +1,6 @@
 ## Overview
 This project includes:
-- Home, Learning, Test, Personality Test pages
+- Login, Home, Learning, Test, Personality Test pages
 - Tools: Pomodoro Timer, Task Wheel, To-do List
 - AI Buddy: an interactive chat assistant that responds to user messages in real time, providing feedback in either a friendly or playful style depending on the chosen personality.
 
