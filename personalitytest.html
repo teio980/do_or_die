@@ -38,118 +38,154 @@
 
 <body class="bg-[#F5F5F7] dark:bg-[#121212] text-gray-900 dark:text-gray-100">
 
-    <!--Navbar-->
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-[#1A1A1A] border-b dark:border-gray-700">
-        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-            <div class="text-xl font-extrabold bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">Do or Cry</div>
+<!--Navbar-->
+<nav class="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-[#1A1A1A] border-b dark:border-gray-700">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+        <div class="text-xl font-extrabold bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">Do or Cry</div>
 
-            <div class="flex items-center space-x-6">
-                <a href="home.html" class="font-medium hover:text-indigo-500">Home</a>
-                <a href="dashboard.html" class="font-medium hover:text-indigo-500">Dashboard</a>
-                <a href="tools.html" class="font-medium hover:text-indigo-500">Tools</a>
-                <button onclick="toggleTheme()" class="p-2 rounded-full bg-gradient-to-r from-purple-600 to-blue-500 text-white dark:text-black">🌙</button>
-            </div>
-        </div>
-    </nav>
-
-    <div class="h-16"></div><div class="h-16"></div>
-
-    <div class="cover">
-        <div class="container">
-            <h1>Personality Test</h1>
-            <p class="lead">Rate each statement from <strong>1 (Strongly Disagree)</strong> to <strong>5 (Strongly Agree)</strong>.</p>
-
-            <form id="quizForm" class="card p-4" onsubmit="return handleSubmit(event)">
-                <div id="questions"></div>
-
-                <div class="flex items-center gap-4 mt-6">
-                    <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded">Get Results</button>
-                    <button type="button" onclick="resetForm()" class="px-4 py-2 bg-gray-300 rounded dark:bg-gray-700">Reset</button>
-                </div>
-            </form>
+        <div class="flex items-center space-x-6">
+            <a href="home.html" class="font-medium hover:text-indigo-500">Home</a>
+            <a href="dashboard.html" class="font-medium hover:text-indigo-500">Dashboard</a>
+            <a href="tools.html" class="font-medium hover:text-indigo-500">Tools</a>
+            <button onclick="toggleTheme()" class="p-2 rounded-full bg-gradient-to-r from-purple-600 to-blue-500 text-white dark:text-black">🌙</button>
         </div>
     </div>
+</nav>
 
+<div class="h-16"></div><div class="h-16"></div>
+
+<div class="cover">
+    <div class="container">
+        <h1>Personality Test</h1>
+        <p class="lead text-center mb-6">Rate each statement from <strong>1 (Strongly Disagree)</strong> to <strong>5 (Strongly Agree)</strong>.</p>
+
+        <!-- QUIZ FORM -->
+        <form id="quizForm" class="space-y-6">
+
+            <div id="questionsContainer" class="space-y-6"></div>
+
+            <button type="submit" class="mt-6 py-3 px-6 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700">
+                Submit
+            </button>
+
+            <button type="button" onclick="resetQuiz()" class="mt - 3 py-3 px-6 bg-gray-400 dark:bg-gray-700 text-white rounded-lg font-semibold hover:bg-gray-500 dark:hover:bg-gray-600">
+                Reset
+            </button>
+        </form>
+
+        <!-- RESULT CARD -->
+        <div id="result" class="mt-10 p-6 rounded-lg bg-purple-100 dark:bg-purple-900 hidden">
+            <h2 id="resultTitle" class="text-2xl font-bold mb-3"></h2>
+            <p id="resultDescription" class="text-lg"></p>
+        </div>
+
+    </div>
+</div>
+
+<!-- SCRIPT -->
 <script>
-    const questions = [
-        "I avoid starting tasks because I’m afraid I might do them wrongly.",
-        "I delay tasks because I feel they are not perfect enough to begin.",
-        "I start projects with excitement but lose interest halfway.",
-        "I feel overwhelmed when a task seems too big.",
-        "I usually start tasks only when the deadline is extremely close.",
-        "I get easily distracted by my phone or entertainment.",
-        "I worry about being judged for not performing well.",
-        "I spend too much time researching instead of starting.",
-        "I find it hard to stick to one idea and complete it.",
-        "I freeze when I don’t know the first step.",
-        "I work better under pressure.",
-        "I jump between tasks often.",
-        "I avoid tasks that highlight weaknesses.",
-        "I redo small details too many times.",
-        "I get bored quickly unless the task is exciting.",
-        "I avoid tasks when unclear.",
-        "I feel productive only when the deadline is near.",
-        "I waste time scrolling or watching videos.",
-        "I wait until I’m in the mood to start.",
-        "I struggle to concentrate for long periods."
-    ];
+const questions = [
+  "I avoid tasks when I am afraid I might fail.",
+  "I feel like everything must be perfect before I start.",
+  "I often imagine big ideas but rarely take action on them.",
+  "I feel overwhelmed when tasks are too big.",
+  "I wait until deadlines are very close before starting.",
+  "I get distracted easily, even when I plan to work.",
+  "I avoid tasks that make me uncomfortable.",
+  "I spend too long planning because I want everything correct.",
+  "I dream about goals more than I work on them.",
+  "I shut down when too many tasks pile up.",
+  "I only feel motivated when time is almost up.",
+  "I jump between tasks and lose focus.",
+  "I procrastinate to avoid possible judgment.",
+  "I worry about making mistakes.",
+  "I think of ideas but don’t finish them.",
+  "I feel stressed easily with unclear tasks.",
+  "I work fast under pressure but slow otherwise.",
+  "I cannot concentrate with distractions around.",
+  "I avoid tasks that feel risky.",
+  "I procrastinate when things feel too boring."
+];
 
-    window.onload = function(){
-        const container = document.getElementById("questions");
-        container.innerHTML = '';
+// Insert questions into HTML
+const container = document.getElementById("questionsContainer");
 
-        questions.forEach((q, index) => {
-            container.innerHTML += `
-                <div class="p-4 border-b dark:border-gray-700">
-                    <p class="font-semibold mb-2">${index+1}. ${q}</p>
-                    <div class="flex gap-6 pl-4">
-                        ${[1,2,3,4,5].map(num => `
-                            <label class="flex items-center gap-2">
-                                <input type="radio" name="q${index}" value="${num}" required>
-                                <span>${num}</span>
-                            </label>
-                        `).join('')}
-                    </div>
-                </div>`;
-        });
+questions.forEach((q, i) => {
+    const block = document.createElement("div");
+    block.className = "card p-6";
+
+    block.innerHTML = `
+        <p class="font-semibold mb-3">${i + 1}. ${q}</p>
+        <div class="flex space-x-6">
+            ${[1,2,3,4,5].map(n => `
+                <label class="flex items-center space-x-2">
+                    <input type="radio" name="q${i + 1}" value="${n}">
+                    <span>${n}</span>
+                </label>
+            `).join('')}
+        </div>
+    `;
+
+    container.appendChild(block);
+});
+
+document.getElementById("quizForm").addEventListener("submit", handleSubmit);
+
+function handleSubmit(e){
+    e.preventDefault();
+
+    const answers = {};
+    for (let i = 1; i <= questions.length; i++) {
+        const val = document.querySelector(`input[name=q${i}]:checked`);
+        if (!val) {
+            alert("Please answer all questions.");
+            return;
+        }
+        answers[i] = parseInt(val.value);
     }
 
-    function toggleTheme(){
-        const html = document.documentElement;
-        const isDark = html.classList.toggle("dark");
-        localStorage.setItem("theme", isDark ? "dark" : "light");
-    }
-</script>
+    // Scoring
+    const scores = {
+      avoider: answers[1] + answers[7] + answers[13] + answers[19],
+      perfectionist: answers[2] + answers[8] + answers[14],
+      dreamer: answers[3] + answers[9] + answers[15],
+      overwhelmed: answers[4] + answers[10] + answers[16],
+      crisis: answers[5] + answers[11] + answers[17],
+      distracted: answers[6] + answers[12] + answers[18] + answers[20]
+    };
 
-<script>
-function handleSubmit(event){
-event.preventDefault();
-const formData=new FormData(document.getElementById('quizForm'));
-let scores={
-avoider:0, perfectionist:0, dreamer:0, overwhelmed:0, crisis:0, distracted:0
-};
-const map={
-avoider:[0,6,12],
-perfectionist:[1,7,13],
-dreamer:[2,8],
-overwhelmed:[3,9,15],
-crisis:[4,10,16],
-distracted:[5,11,17,19]
-};
-for(const type in map){ map[type].forEach(i=>{scores[type]+=Number(formData.get('q'+i)||0)});}
-let resultType=Object.keys(scores).reduce((a,b)=>scores[a]>scores[b]?a:b);
-const descriptions={
-avoider:"You fear failure or judgment, causing avoidance.",
-perfectionist:"You want everything perfect before starting.",
-dreamer:"You enjoy ideas but struggle to finish.",
-overwhelmed:"Tasks feel too big or unclear.",
-crisis:"You work only under pressure.",
-distracted:"You struggle to stay focused due to interruptions."
-};
-alert("Your personality type: "+resultType.toUpperCase()+"\n"+descriptions[resultType]);
-return false;
+    const resultType = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+
+    const descriptions = {
+      avoider: "You avoid tasks that feel risky or uncomfortable. Breaking tasks into small steps can help you build confidence.",
+      perfectionist: "You delay work because you want everything to be flawless. Progress matters more than perfection.",
+      dreamer: "You love ideas more than execution. Turning goals into actionable steps will bring your visions to life.",
+      overwhelmed: "Tasks feel too big or unclear, causing shutdown. Divide work into small, manageable parts.",
+      crisis: "You rely on last-minute pressure to work. Creating earlier mini-deadlines can reduce stress.",
+      distracted: "You get easily pulled away by distractions. Eliminating interruptions will help you stay productive."
+    };
+
+    document.getElementById("resultTitle").innerText =
+        "Your Procrastination Type: " + resultType.toUpperCase();
+
+    document.getElementById("resultDescription").innerText =
+        descriptions[resultType];
+
+    document.getElementById("result").classList.remove("hidden");
 }
-function resetForm(){document.getElementById('quizForm').reset();}
+
+function resetQuiz(){
+  document.querySelectorAll("input [type=radio]").forEach(r => r.checked = false);
+  docuement.getElementById("result").classList.add("hidden");
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleTheme(){
+    const html = document.documentElement;
+    const isDark = html.classList.toggle("dark");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+}
 </script>
+
 </body>
 </html>
