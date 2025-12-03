@@ -209,7 +209,7 @@ document.getElementById("loginbtn").addEventListener("click", function() {
     let username = document.getElementById("username").value;
     if(username.trim() !== "") {
         localStorage.setItem("username", username);
-        window.location.href = "home.html";
+        window.location.href = "../home/home.html";
     } else {
         alert("Please enter a username!");
     }
