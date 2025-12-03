@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Test - Procrastination Knowledge Quiz</title>
+<link rel="icon" href="../../images/logo.png" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
@@ -15,6 +16,8 @@
     document.documentElement.classList.add("dark");
   }
 </script>
+
+<script src="../../js/questions.js"></script>
 
 <style>
     body, * {
@@ -58,6 +61,17 @@
 
     .dark h1 {
         color: #818cf8;
+    }
+
+    .user-welcome {
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 15px;
+        font-weight: 500;
+    }
+
+    .dark .user-welcome {
+        color: #aaa;
     }
 
     .warning {
@@ -257,6 +271,19 @@
         background: rgba(244, 67, 54, 0.3);
         color: #e57373;
         border-left-color: #ef5350;
+    }
+
+    .explanation {
+        margin-top: 10px;
+        padding: 10px 15px;
+        background: rgba(255,255,255,0.5);
+        border-radius: 8px;
+        font-size: 14px;
+        font-style: italic;
+    }
+
+    .dark .explanation {
+        background: rgba(255,255,255,0.1);
     }
 
     .next-btn {
@@ -469,6 +496,17 @@
         color: #aaa;
     }
 
+    .history-username {
+        font-size: 14px;
+        color: #3c55e6;
+        font-weight: 600;
+        margin-bottom: 4px;
+    }
+
+    .dark .history-username {
+        color: #818cf8;
+    }
+
     .history-score {
         font-size: 18px;
         font-weight: 600;
@@ -491,11 +529,11 @@
       Do or Cry
     </div>
     <div class="flex items-center space-x-6">
-      <a href="index.html" class="font-medium transition duration-300 bg-gradient-to-r from-gray-800 to-gray-800 bg-clip-text text-transparent 
+      <a href="../home/home.html" class="font-medium transition duration-300 bg-gradient-to-r from-gray-800 to-gray-800 bg-clip-text text-transparent 
                 dark:from-gray-200 dark:to-gray-200 hover:from-indigo-500 hover:to-purple-500">Home</a>
-      <a href="dashboard.html" class="font-medium transition duration-300 bg-gradient-to-r from-gray-800 to-gray-800 bg-clip-text text-transparent 
+      <a href="../dashboard/dashboard.html" class="font-medium transition duration-300 bg-gradient-to-r from-gray-800 to-gray-800 bg-clip-text text-transparent 
                 dark:from-gray-200 dark:to-gray-200 hover:from-indigo-500 hover:to-purple-500">Dashboard</a>
-      <a href="tools.html" class="font-medium transition duration-300 bg-gradient-to-r from-gray-800 to-gray-800 bg-clip-text text-transparent 
+      <a href="../tools/tools.html" class="font-medium transition duration-300 bg-gradient-to-r from-gray-800 to-gray-800 bg-clip-text text-transparent 
                 dark:from-gray-200 dark:to-gray-200 hover:from-indigo-500 hover:to-purple-500">Tools</a>
       <button onclick="toggleTheme()" class="p-2 rounded-full bg-gradient-to-r from-purple-600 to-blue-500
                text-white dark:text-black transition duration-500 transform hover:scale-125 hover:rotate-180 hover:shadow-[0_0_12px_rgba(139,92,246,0.6)]">
@@ -518,6 +556,7 @@
 
 <div class="container">
     <h1>📝 Procrastination Knowledge Quiz</h1>
+    <div class="user-welcome" id="userWelcome"></div>
 
     <!-- Start Section -->
     <div class="start-section" id="startSection">
@@ -566,7 +605,7 @@
 
         <div class="action-buttons">
             <button class="btn btn-primary" onclick="startQuiz()">Retake Quiz</button>
-            <button class="btn btn-secondary" onclick="navigateTo('home.html')">Back to Home</button>
+            <button class="btn btn-secondary" onclick="navigateTo('../home/home.html')">Back to Home</button>
         </div>
 
         <!-- History Section -->
@@ -578,36 +617,66 @@
 </div>
 
 <script>
-// Mock question bank - replace with your actual questions
-const questionBank = [
-    {
-        question: "What is procrastination?",
-        options: ["Being lazy", "Voluntary delay despite knowing consequences", "Taking breaks", "Working slowly"],
-        correct: 1
-    },
-    {
-        question: "What is the Two-Minute Rule?",
-        options: ["Work for 2 minutes only", "If task takes <2 min, do it immediately", "Take 2-min breaks", "Think for 2 minutes before starting"],
-        correct: 1
-    },
-    // Add more questions here...
-];
-
+// Global variables
 let currentQuestion = 0;
 let score = 0;
 let answers = [];
 let currentQuestions = [];
+let currentUsername = '';
 
+window.onload = function() {
+    // Check if questionBank is loaded
+    if (typeof questionBank === 'undefined') {
+        alert('Error: Question bank not loaded! Please make sure questions.js is in the same directory.');
+        return;
+    }
+    
+    // Get username from localStorage
+    currentUsername = localStorage.getItem('username') || 'Guest';
+    document.getElementById('userWelcome').textContent = `Welcome back, ${currentUsername}! 👋`;
+};
+
+// Shuffle array function (Fisher-Yates algorithm)
+function shuffleArray(array) {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+}
+
+// Get random questions from the bank
 function getRandomQuestions(count) {
-    const shuffled = [...questionBank].sort(() => 0.5 - Math.random());
+    const shuffled = shuffleArray(questionBank);
     return shuffled.slice(0, Math.min(count, questionBank.length));
+}
+
+// Shuffle options for a question and track correct answer
+function shuffleOptions(question) {
+    const indices = [0, 1, 2, 3];
+    const shuffledIndices = shuffleArray(indices);
+    
+    const shuffledOptions = shuffledIndices.map(i => question.options[i]);
+    const newCorrectIndex = shuffledIndices.indexOf(question.correct);
+    
+    return {
+        question: question.question,
+        options: shuffledOptions,
+        correct: newCorrectIndex,
+        explanation: question.explanation,
+        originalCorrectAnswer: question.options[question.correct]
+    };
 }
 
 function startQuiz() {
     currentQuestion = 0;
     score = 0;
     answers = [];
-    currentQuestions = getRandomQuestions(10);
+    
+    // Get 10 random questions and shuffle their options
+    const randomQuestions = getRandomQuestions(10);
+    currentQuestions = randomQuestions.map(q => shuffleOptions(q));
     
     document.getElementById('startSection').style.display = 'none';
     document.getElementById('resultSection').style.display = 'none';
@@ -642,11 +711,13 @@ function selectAnswer(index) {
     const q = currentQuestions[currentQuestion];
     const options = document.querySelectorAll('.option');
     
+    // Disable all options
     options.forEach(opt => {
         opt.classList.add('disabled');
         opt.onclick = null;
     });
     
+    // Mark correct answer
     options[q.correct].classList.add('correct');
     
     const isCorrect = index === q.correct;
@@ -655,11 +726,17 @@ function selectAnswer(index) {
     if (isCorrect) {
         score++;
         feedback.className = 'feedback correct';
-        feedback.textContent = '✅ Correct! Well done!';
+        feedback.innerHTML = `
+            ✅ Correct! Well done!
+            <div class="explanation">💡 ${q.explanation}</div>
+        `;
     } else {
         options[index].classList.add('wrong');
         feedback.className = 'feedback wrong';
-        feedback.textContent = `❌ Incorrect! The correct answer is: ${q.options[q.correct]}`;
+        feedback.innerHTML = `
+            ❌ Incorrect! The correct answer is: ${q.options[q.correct]}
+            <div class="explanation">💡 ${q.explanation}</div>
+        `;
     }
     
     answers.push({
@@ -715,6 +792,7 @@ function saveScore(percentage) {
     const history = JSON.parse(localStorage.getItem('testHistory') || '[]');
     
     const newRecord = {
+        username: currentUsername,
         date: new Date().toLocaleString('en-US'),
         score: percentage,
         correct: score,
@@ -723,6 +801,7 @@ function saveScore(percentage) {
     
     history.unshift(newRecord);
     
+    // Keep only last 100 records
     if (history.length > 100) {
         history.pop();
     }
@@ -745,6 +824,7 @@ function displayHistory() {
         div.className = 'history-item';
         div.innerHTML = `
             <div>
+                <div class="history-username">${record.username || 'Guest'}</div>
                 <div class="history-date">${record.date}</div>
                 <div style="font-size: 14px; color: #666; margin-top: 4px;">
                     ${record.correct}/${record.total} correct
