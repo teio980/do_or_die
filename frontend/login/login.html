@@ -231,14 +231,24 @@ function toggleTheme() {
 }
 
 document.getElementById("loginbtn").addEventListener("click", function() {
-    let username = document.getElementById("username").value;
-    if(username.trim() !== "") {
-        localStorage.setItem("username", username);
-        window.location.href = "../home/home.html";
-    } else {
+    let newUser = document.getElementById("username").value.trim();
+    
+    if (!newUser) {
         alert("Please enter a username!");
+        return;
     }
+
+    let oldUser = localStorage.getItem("username");
+
+    if (oldUser && oldUser !== newUser) {
+        localStorage.clear();
+    }
+
+    localStorage.setItem("username", newUser);
+
+    window.location.href = "../home/home.html";
 });
+
 </script>
 </body>
 </html>
