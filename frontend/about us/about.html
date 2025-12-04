@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <title>About Us - Do or Cry</title>
+  <link rel="icon" href="../../images/logo.png" type="image/png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: "class" };
+    if (localStorage.getItem("theme") === "dark") {
+      document.documentElement.classList.add("dark");
+    }
+  </script>
+</head>
+<body class="bg-[#F5F5F7] dark:bg-[#121212] text-gray-900 dark:text-gray-100">
+
+<!-- Navigation Bar -->
+<nav class="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-[#1A1A1A] border-b border-gray-200 dark:border-gray-700">
+  <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+
+    <div class="text-xl font-extrabold tracking-wide
+                bg-gradient-to-r from-indigo-500 to-purple-500 
+                bg-clip-text text-transparent
+                transition duration-300 transform
+                hover:scale-105 hover:from-pink-500 hover:to-yellow-500">
+      Do or Cry
+    </div>
+
+    <div class="flex items-center space-x-6">
+      <a href="../home/home.html" class="font-medium transition duration-300
+         bg-gradient-to-r from-gray-800 to-gray-800 bg-clip-text text-transparent 
+         dark:from-gray-200 dark:to-gray-200
+         hover:from-indigo-500 hover:to-purple-500
+         dark:hover:from-teal-300 dark:hover:to-sky-400">Home</a>
+
+      <a href="../dashboard/dashboard.html" class="font-medium transition duration-300
+         bg-gradient-to-r from-gray-800 to-gray-800 bg-clip-text text-transparent 
+         dark:from-gray-200 dark:to-gray-200
+         hover:from-indigo-500 hover:to-purple-500
+         dark:hover:from-teal-300 dark:hover:to-sky-400">Dashboard</a>
+
+      <a href="../tools/tools.html" class="font-medium transition duration-300
+         bg-gradient-to-r from-gray-800 to-gray-800 bg-clip-text text-transparent 
+         dark:from-gray-200 dark:to-gray-200
+         hover:from-indigo-500 hover:to-purple-500
+         dark:hover:from-teal-300 dark:hover:to-sky-400">Tools</a>
+
+      <!-- Theme Button -->
+      <button onclick="toggleTheme()"
+        class="p-2 rounded-full bg-gradient-to-r from-purple-600 to-blue-500
+               text-white dark:text-black
+               transition duration-500 transform hover:scale-125 hover:rotate-180 hover:shadow-[0_0_12px_rgba(139,92,246,0.6)]">
+        <span class="dark:hidden">🌙</span>
+        <span class="hidden dark:inline" style="font-family: 'Segoe UI Symbol';">☀</span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="h-20"></div>
+
+<!-- About Us Content -->
+<section class="max-w-6xl mx-auto px-6 py-16 space-y-6">
+  <h1 class="text-4xl font-extrabold mb-6">About Us</h1>
+  
+  <p class="text-lg text-gray-700 dark:text-gray-300">
+    Do or Cry is a platform dedicated to helping you overcome procrastination and build better habits. Our mission is to provide personalized tools, insights, and guidance to make habit formation easier and more enjoyable.
+  </p>
+
+  <p class="text-lg text-gray-700 dark:text-gray-300">
+    We believe that small steps taken consistently lead to big changes. Whether you're a student, professional, or lifelong learner, our platform helps you track your progress, understand your habits, and stay motivated every day.
+  </p>
+
+  <p class="text-lg text-gray-700 dark:text-gray-300">
+    From learning resources and quizzes to productivity tools and AI study buddies, everything is designed to support your growth and help you achieve your goals.
+  </p>
+</section>
+
+<!-- Team Section -->
+<section class="max-w-6xl mx-auto px-6 py-12">
+  <h2 class="text-3xl font-bold mb-6 text-center">Our Team</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
+
+    <!-- Member 1 -->
+    <div class="bg-white dark:bg-[#1E1E1E] rounded-xl p-6 shadow text-center">
+      <img src="../../images/team/member1.jpg" alt="Law Yong Soon" class="rounded-full w-48 h-48 mx-auto mb-4">
+      <h3 class="text-xl font-semibold mb-2">Law Yong Soon</h3>
+      <p class="text-gray-600 dark:text-gray-400 text-sm">Team Leader & AI Buddy Developer</p>
+      <a href="https://www.instagram.com/yongsoon_1022" target="_blank" class="text-indigo-600 dark:text-indigo-400 text-sm hover:underline">
+      @yongsoon
+      </a>
+    </div>
+
+    <!-- Member 2 -->
+    <div class="bg-white dark:bg-[#1E1E1E] rounded-xl p-6 shadow text-center">
+      <img src="../../images/team/member2.jpg" alt="Ng Ze Jian" class="rounded-full w-48 h-48 mx-auto mb-4">
+      <h3 class="text-xl font-semibold mb-2">Ng Ze Jian</h3>
+      <p class="text-gray-600 dark:text-gray-400 text-sm">Personality Test Developer</p>
+      <a href="https://www.instagram.com/zejian_1218" target="_blank" class="text-indigo-600 dark:text-indigo-400 text-sm hover:underline">
+      @zejian
+      </a>
+    </div>
+
+    <!-- Member 3 -->
+    <div class="bg-white dark:bg-[#1E1E1E] rounded-xl p-6 shadow text-center">
+      <img src="../../images/team/member3.jpg" alt="Kong Wen Kang" class="rounded-full w-48 h-48 mx-auto mb-4">
+      <h3 class="text-xl font-semibold mb-2">Kong Wen Khang</h3>
+      <p class="text-gray-600 dark:text-gray-400 text-sm">Tools & Dashboard Developer</p>
+      <a href="https://www.instagram.com/wenkhang_0512" target="_blank" class="text-indigo-600 dark:text-indigo-400 text-sm hover:underline">
+      @wenkhang
+      </a>
+    </div>
+
+    <!-- Member 4 -->
+    <div class="bg-white dark:bg-[#1E1E1E] rounded-xl p-6 shadow text-center">
+      <img src="../../images/team/member4.jpg" alt="Kum Bing Sheng" class="rounded-full w-48 h-48 mx-auto mb-4">
+      <h3 class="text-xl font-semibold mb-2">Kum Bing Sheng</h3>
+      <p class="text-gray-600 dark:text-gray-400 text-sm">Learning & Test Developer</p>
+      <a href="https://www.instagram.com/kumbs0524" target="_blank" class="text-indigo-600 dark:text-indigo-400 text-sm hover:underline">
+      @bingsheng
+      </a>
+    </div>
+
+    <!-- Member 5 -->
+    <div class="bg-white dark:bg-[#1E1E1E] rounded-xl p-6 shadow text-center">
+      <img src="../../images/team/member5.jpg" alt="Xiao Wen Hao" class="rounded-full w-48 h-48 mx-auto mb-4">
+      <h3 class="text-xl font-semibold mb-2">Xiao Wen Hao</h3>
+      <p class="text-gray-600 dark:text-gray-400 text-sm">Login & Home Developer</p>
+      <a href="https://www.instagram.com/woonhao0505" target="_blank" class="text-indigo-600 dark:text-indigo-400 text-sm hover:underline">
+      @woonhao
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const dark = html.classList.toggle("dark");
+  localStorage.setItem("theme", dark ? "dark" : "light");
+}
+</script>
+
+</body>
+</html>
